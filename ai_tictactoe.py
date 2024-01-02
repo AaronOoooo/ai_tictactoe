@@ -36,18 +36,20 @@ class TicTacToe:
         self.score_display.grid(row=3, column=4, columnspan=2, sticky='w')
 
         self.message_label = tk.Label(root, text="Game Result:")
-        self.message_label.grid(row=5, column=4, columnspan=2, sticky='w')
+        self.message_label.grid(row=4, column=0, columnspan=6, pady=10)
 
         self.message_text = tk.StringVar()
         self.message_display = tk.Label(root, textvariable=self.message_text)
-        self.message_display.grid(row=6, column=4, columnspan=2, sticky='w')
+        self.message_display.grid(row=5, column=0, columnspan=6, pady=10)
 
-        self.root.grid_rowconfigure(1, weight=1)
-        self.root.grid_rowconfigure(2, weight=1)
-        self.root.grid_rowconfigure(3, weight=1)
-        self.root.grid_columnconfigure(0, weight=1)
-        self.root.grid_columnconfigure(1, weight=1)
-        self.root.grid_columnconfigure(2, weight=1)
+        # Center the board at the start
+        for i in range(6):
+            self.root.grid_rowconfigure(i, weight=1)
+        for i in range(6):
+            self.root.grid_columnconfigure(i, weight=1)
+
+        self.root.grid_rowconfigure(3, weight=0)
+        self.root.grid_rowconfigure(4, weight=0)
 
     def start_game(self):
         player_name = self.name_entry.get()
@@ -127,6 +129,7 @@ class TicTacToe:
         if not self.winner:
             self.start_button.config(state=tk.DISABLED)
             self.name_entry.config(state=tk.DISABLED)
+            self.message_text.set("")  # Clear the previous game result message
         else:
             self.start_button.config(state=tk.NORMAL)
             self.name_entry.config(state=tk.NORMAL)
